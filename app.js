@@ -3,14 +3,24 @@ const morgan=require('morgan');
 const bodyParser=require('body-parser');
 const nunjucks=require('nunjucks');
 
+const routes=require('./routes');
+
 const app= express();
 
 app.use('/', function(req, res, next){
   res.send("Hey");
 });
 
-app.get('/', function(req, res, next){
+app.use('/',routes);
 
-});
 
 app.listen(3000, () => console.log("Server listening on port 3000.."));
+
+
+// point nunjucks to the directory containing templates and turn off caching; configure returns an Environment
+// instance, which we'll want to use to add Markdown support later.
+var env = nunjucks.configure('views', {noCache: true});
+// have res.render work with html files
+app.set('view engine', 'html');
+// when res.render works with html files, have it use nunjucks to do so
+app.engine('html', nunjucks.render);
