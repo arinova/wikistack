@@ -11,6 +11,11 @@ const wikiRouter = require('./routes/wiki');
 const models=require('./models');
 
 
+// body parsing middleware
+app.use(bodyParser.urlencoded({ extended: true })); // for HTML form submits
+app.use(bodyParser.json()); // would be for AJAX requests
+
+
 app.use(router);
 app.use('/wiki', wikiRouter);
 
