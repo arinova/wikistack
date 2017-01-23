@@ -2,16 +2,36 @@ const express=require('express');
 const morgan=require('morgan');
 const bodyParser=require('body-parser');
 const nunjucks=require('nunjucks');
-
-const routes=require('./routes');
+const path=require('path');
 
 const app= express();
 
-app.use('/', function(req, res, next){
-  res.send("Hey");
-});
+const routes=require('./routes');
+const models=require('./models');
 
-app.use('/',routes);
+
+app.use(routes);
+app.use(express.static(path.join(__dirname, '/public')));
+
+
+/*Sequelize Models */
+models.Page.sync({force: true})
+  .then(function(){
+
+
+  })
+  .catch(console.error);
+
+models.User.sync({force: true})
+  .then(function(){
+    return models.User.create({
+
+    });
+
+  })
+  .catch(console.error);
+
+
 
 
 app.listen(3000, () => console.log("Server listening on port 3000.."));
