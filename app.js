@@ -15,26 +15,16 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 
 /*Sequelize Models */
-models.Page.sync({force: true})
+models.User.sync({})
   .then(function(){
-
-
+    return models.Page.sync({});
   })
-  .catch(console.error);
-
-models.User.sync({force: true})
   .then(function(){
-    return models.User.create({
-
-    });
-
+    app.listen(3000, () => console.log("Server listening on port 3000.."));
   })
   .catch(console.error);
 
 
-
-
-app.listen(3000, () => console.log("Server listening on port 3000.."));
 
 
 // point nunjucks to the directory containing templates and turn off caching; configure returns an Environment
