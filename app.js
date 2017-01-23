@@ -6,11 +6,14 @@ const path=require('path');
 
 const app= express();
 
-const routes=require('./routes');
+const router =require('./routes');
+const wikiRouter = require('./routes/wiki');
 const models=require('./models');
 
 
-app.use(routes);
+app.use(router);
+app.use('/wiki', wikiRouter);
+
 app.use(express.static(path.join(__dirname, '/public')));
 
 
